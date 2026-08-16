@@ -243,6 +243,10 @@ section {
     font-weight: 700;
 }
 
+.stat-icon i {
+    font-size: 1.2rem;
+}
+
 
 .stat-card:nth-child(2) .stat-icon {
     background: var(--danger-light);

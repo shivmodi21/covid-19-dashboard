@@ -113,14 +113,31 @@ git clone https://github.com/shivmodi21/covid-19-dashboard.git
 cd covid-19-dashboard
 ```
 
-### 2. Install backend dependencies
+### 2. Go to Backend Folder
 
 ```bash
 cd backend
+```
+
+### 3. Make Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+### 4. Activate Virtual Environment
+
+```bash
+.venv\Scripts\activate
+```
+
+### 5. Install backend dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. Start the Flask server
+### 6. Start the Flask server
 
 ```bash
 python app.py
