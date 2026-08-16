@@ -1,0 +1,137 @@
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+
+from scraper import (
+    get_worldwide_data,
+    get_country_data,
+    get_global_data
+)
+
+
+app = Flask(__name__)
+
+CORS(app)
+
+
+# =================================
+# Home
+# =================================
+
+@app.route("/")
+def home():
+
+    return jsonify({
+        "message": "COVID-19 Dashboard API is running"
+    })
+
+
+# =================================
+# Worldwide Summary
+# =================================
+
+@app.route("/api/worldwide")
+def worldwide():
+
+    try:
+
+        data = get_global_data()
+
+        return jsonify(data)
+
+    except Exception as error:
+
+        return jsonify({
+            "error": str(error)
+        }), 500
+
+
+# =================================
+# Country List
+# =================================
+
+@app.route("/api/countries")
+def countries():
+
+    try:
+
+        data = get_worldwide_data()
+
+        country_names = [
+            country["country"]
+            for country in data
+        ]
+
+        return jsonify(country_names)
+
+    except Exception as error:
+
+        return jsonify({
+            "error": str(error)
+        }), 500
+
+
+# =================================
+# All Country Statistics
+# =================================
+
+@app.route("/api/countries/data")
+def countries_data():
+
+    try:
+
+        data = get_worldwide_data()
+
+        return jsonify(data)
+
+    except Exception as error:
+
+        return jsonify({
+            "error": str(error)
+        }), 500
+
+
+# =================================
+# Selected Country
+# =================================
+
+@app.route("/api/country")
+def country():
+
+    country_name = request.args.get("country")
+
+    if not country_name:
+
+        return jsonify({
+            "error": "Country parameter is required."
+        }), 400
+
+    try:
+
+        data = get_country_data(country_name)
+
+        return jsonify(data)
+
+    except ValueError as error:
+
+        return jsonify({
+            "error": str(error)
+        }), 404
+
+    except Exception as error:
+
+        return jsonify({
+            "error": str(error)
+        }), 500
+
+
+# =================================
+# Run Application
+# =================================
+
+if __name__ == "__main__":
+
+    app.run(
+        debug=True,
+        host="127.0.0.1",
+        port=5000
+    )

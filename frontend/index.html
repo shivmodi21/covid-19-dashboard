@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>COVID-19 Global Dashboard</title>
+
+    <meta
+        name="description"
+        content="Interactive COVID-19 statistics dashboard with worldwide and country-level data."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+
+            <a href="../../index.html" class="back-link">
+                ← Back to Portfolio
+            </a>
+
+            <div class="header-content">
+                <span class="project-label">Python & Web Application</span>
+
+                <h1>COVID-19 Global Dashboard</h1>
+
+                <p class="project-description">
+                    Explore worldwide and country-level COVID-19 statistics
+                    through an interactive dashboard powered by Python.
+                </p>
+            </div>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- Worldwide Overview -->
+        <section class="overview-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">Worldwide</span>
+                    <h2>Global Overview</h2>
+
+                    <p>
+                        Current statistics across all reported countries.
+                    </p>
+                </div>
+
+
+                <div class="stats-container">
+
+                    <!-- Total Cases -->
+                    <article class="stat-card">
+                        <div class="stat-icon">
+                            +
+                        </div>
+
+                        <div class="stat-content">
+                            <span class="stat-label">
+                                Total Cases
+                            </span>
+
+                            <h3 id="world-cases">
+                                --
+                            </h3>
+                        </div>
+                    </article>
+
+
+                    <!-- Total Deaths -->
+                    <article class="stat-card">
+                        <div class="stat-icon">
+                            †
+                        </div>
+
+                        <div class="stat-content">
+                            <span class="stat-label">
+                                Total Deaths
+                            </span>
+
+                            <h3 id="world-deaths">
+                                --
+                            </h3>
+                        </div>
+                    </article>
+
+
+                    <!-- Recovered -->
+                    <article class="stat-card">
+                        <div class="stat-icon">
+                            ✓
+                        </div>
+
+                        <div class="stat-content">
+                            <span class="stat-label">
+                                Total Recovered
+                            </span>
+
+                            <h3 id="world-recovered">
+                                --
+                            </h3>
+                        </div>
+                    </article>
+
+
+                    <!-- Countries -->
+                    <article class="stat-card">
+                        <div class="stat-icon">
+                            #
+                        </div>
+
+                        <div class="stat-content">
+                            <span class="stat-label">
+                                Countries
+                            </span>
+
+                            <h3 id="country-count">
+                                --
+                            </h3>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Country Explorer -->
+        <section class="country-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">Explore</span>
+                    <h2>Country Statistics</h2>
+
+                    <p>
+                        Select a country to view its COVID-19 statistics.
+                    </p>
+                </div>
+
+
+                <div class="country-controls">
+
+                    <label for="country-select">
+                        Select Country
+                    </label>
+
+                    <select id="country-select">
+                        <option value="">
+                            Select a country
+                        </option>
+                    </select>
+                </div>
+
+
+                <!-- Selected Country -->
+                <div id="country-result" class="country-result">
+
+                    <div class="selected-country">
+                        <span class="country-label">
+                            Selected Country
+                        </span>
+
+                        <h3 id="selected-country">
+                            --
+                        </h3>
+                    </div>
+
+
+                    <div class="country-stats">
+
+                        <div class="country-stat">
+                            <span>Total Cases</span>
+                            <strong id="country-cases">
+                                --
+                            </strong>
+                        </div>
+
+                        <div class="country-stat">
+                            <span>Total Deaths</span>
+                            <strong id="country-deaths">
+                                --
+                            </strong>
+                        </div>
+
+                        <div class="country-stat">
+                            <span>Total Recovered</span>
+                            <strong id="country-recovered">
+                                --
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="notification-action">
+
+                        <button id="notify-btn">
+                            🔔 Notify Me
+                        </button>
+
+                        <p id="notification-status">
+                            Get a desktop notification for this country.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Country Table -->
+        <section class="countries-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">Countries</span>
+                    <h2>Worldwide Statistics</h2>
+
+                    <p>
+                        Compare COVID-19 statistics across countries.
+                    </p>
+                </div>
+
+
+                <div class="table-controls">
+
+                    <input
+                        type="text"
+                        id="country-search"
+                        placeholder="Search country..."
+                        aria-label="Search country"
+                    >
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table class="country-table">
+
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                <th>Total Cases</th>
+                                <th>Total Deaths</th>
+                                <th>Total Recovered</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="country-table-body">
+
+                            <!-- JavaScript will populate this -->
+
+                            <tr>
+                                <td colspan="4">
+                                    Loading country statistics...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- How It Works -->
+        <section class="how-it-works">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">Architecture</span>
+                    <h2>How It Works</h2>
+                </div>
+
+
+                <div class="steps-container">
+
+                    <article class="step-card">
+
+                        <span class="step-number">
+                            01
+                        </span>
+
+                        <h3>Fetch Data</h3>
+
+                        <p>
+                            The Python backend retrieves COVID-19
+                            statistics from the selected data source.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step-card">
+
+                        <span class="step-number">
+                            02
+                        </span>
+
+                        <h3>Serve API</h3>
+
+                        <p>
+                            Flask exposes worldwide and country-level
+                            statistics through REST API endpoints.
+                        </p>
+
+                    </article>
+
+
+                    <article class="step-card">
+
+                        <span class="step-number">
+                            03
+                        </span>
+
+                        <h3>Interactive Dashboard</h3>
+
+                        <p>
+                            JavaScript retrieves the data and dynamically
+                            updates the dashboard.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- About Project -->
+        <section class="project-info">
+            <div class="container">
+
+                <div class="info-card">
+
+                    <div class="section-heading">
+                        <span class="section-label">About</span>
+                        <h2>About This Project</h2>
+                    </div>
+
+                    <p>
+                        This project started as a Python desktop notification
+                        application for monitoring COVID-19 statistics.
+                        It has been extended into an interactive web
+                        dashboard for exploring worldwide and country-level
+                        data.
+                    </p>
+
+
+                    <div class="technologies">
+
+                        <span class="technology-tag">
+                            Python
+                        </span>
+
+                        <span class="technology-tag">
+                            Flask
+                        </span>
+
+                        <span class="technology-tag">
+                            HTML
+                        </span>
+
+                        <span class="technology-tag">
+                            CSS
+                        </span>
+
+                        <span class="technology-tag">
+                            JavaScript
+                        </span>
+
+                        <span class="technology-tag">
+                            REST API
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+                COVID-19 Global Dashboard
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
