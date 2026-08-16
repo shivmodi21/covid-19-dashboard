@@ -7,21 +7,33 @@ from scraper import (
     get_global_data
 )
 
-app = Flask(
-    __name__,
-    static_folder="../frontend"
+import os
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+FRONTEND_DIR = os.path.join(
+    BASE_DIR,
+    "frontend"
 )
 
-CORS(app)
+app = Flask(__name__)
 
+CORS(app)
 
 @app.route("/")
 def home():
     return send_from_directory(
-        app.static_folder,
+        FRONTEND_DIR,
         "index.html"
     )
 
+@app.route("/<path:filename>")
+def frontend_files(filename):
+    return send_from_directory(
+        FRONTEND_DIR,
+        filename
+    )
 
 # =================================
 # Worldwide Summary
