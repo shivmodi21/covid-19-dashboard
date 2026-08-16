@@ -1,107 +1,194 @@
-# COVID-19 India Notifier
+# COVID-19 Global Dashboard
 
-A Python-based desktop notification application that retrieves COVID-19 statistics for India and displays them as a desktop notification.
+An interactive web dashboard for exploring historical COVID-19 statistics by country.
+
+The project started as a Python-based desktop notification application and was extended into a web-based dashboard using **Python, Flask, BeautifulSoup, HTML, CSS, and JavaScript**.
 
 ## Features
 
-* Fetches COVID-19 statistics using web scraping.
-* Extracts new cases and deaths using BeautifulSoup.
-* Displays the information through desktop notifications.
-* Includes two notification implementations:
+* 🌍 Worldwide COVID-19 statistics overview
+* 🔎 Country selection and automatic statistics loading
+* 📊 Country-level statistics table
+* 🔍 Search countries within the worldwide table
+* 🔔 Browser desktop notifications for the selected country
+* 📱 Responsive dashboard for desktop and mobile
+* 🔄 REST API powered by Flask
+* 🌐 Data retrieved from Worldometer
 
-  * `win10toast`
-  * `plyer`
+## Dashboard
 
-## How It Works
+The dashboard provides:
 
-```text
-Worldometer
-     ↓
-Python Web Scraper
-     ↓
-BeautifulSoup
-     ↓
-COVID-19 Statistics
-     ↓
-Desktop Notification
-```
+* Total COVID-19 cases
+* Total deaths
+* Total recovered
+* Country count
+* Country-specific statistics
+* Worldwide country comparison
 
-## Technologies
+The country explorer automatically updates when a country is selected from the dropdown.
+
+## Technology Stack
+
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript
+* Browser Notification API
+
+### Backend
 
 * Python
+* Flask
+* Flask-CORS
 * BeautifulSoup
-* urllib
-* Web Scraping
-* Win10Toast
-* Plyer
+* Requests
+
+### Data Source
+
+COVID-19 statistics are retrieved from **Worldometer**.
+
+> **Data note:** Worldometer's COVID-19 tracker stopped updating on April 13, 2024. Therefore, this project should be considered a dashboard for historical COVID-19 data rather than a source of live COVID-19 statistics.
 
 ## Project Structure
 
 ```text
-covid-notifier/
+covid-19-dashboard/
 │
-├── index.html
-├── css/
-│   └── style.css
-│
-├── python/
-│   ├── notifier.py
-│   ├── notifier_plyer.py
+├── backend/
+│   ├── app.py
+│   ├── scraper.py
 │   └── requirements.txt
 │
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
+├── .gitignore
 └── README.md
 ```
 
-## Installation
+## API Endpoints
 
-Create and activate a virtual environment:
+The Flask backend provides the following endpoints:
 
-```bash
-python -m venv .venv
+| Endpoint                     | Description                       |
+| ---------------------------- | --------------------------------- |
+| `/`                          | Dashboard homepage                |
+| `/api/worldwide`             | Worldwide COVID-19 summary        |
+| `/api/countries`             | List of available countries       |
+| `/api/countries/data`        | Statistics for all countries      |
+| `/api/country?country=India` | Statistics for a selected country |
+
+### Example
+
+```text
+/api/country?country=India
 ```
 
-Activate it on Windows:
+Returns country-level information including:
 
-```bash
-.venv\Scripts\activate
+```json
+{
+    "country": "India",
+    "total_cases": "...",
+    "new_cases": "...",
+    "total_deaths": "...",
+    "new_deaths": "...",
+    "total_recovered": "...",
+    "new_recovered": "...",
+    "active_cases": "...",
+    "serious_critical": "..."
+}
 ```
 
-Install the dependencies:
+## Running Locally
+
+### 1. Clone the repository
 
 ```bash
-pip install -r python/requirements.txt
+git clone https://github.com/shivmodi21/covid-19-dashboard.git
+cd covid-19-dashboard
 ```
 
-## Running the Application
-
-For the Win10Toast implementation:
+### 2. Install backend dependencies
 
 ```bash
-python python/notifier.py
+cd backend
+pip install -r requirements.txt
 ```
 
-For the Plyer implementation:
+### 3. Start the Flask server
 
 ```bash
-python python/notifier_plyer.py
+python app.py
 ```
 
-The application retrieves the available COVID-19 statistics and displays them as a desktop notification.
+The application will be available at:
 
-## Notification Implementations
+```text
+http://127.0.0.1:5000
+```
 
-### Win10Toast
+## Notifications
 
-`notifier.py` uses the `win10toast` library to generate Windows desktop notifications.
+The dashboard uses the browser's **Notification API** to display desktop notifications for the selected country.
 
-### Plyer
+When the user selects a country and enables notifications, the dashboard can display its current loaded statistics as a desktop notification.
 
-`notifier_plyer.py` uses `plyer.notification`, providing an alternative notification implementation.
+Browser notification permissions must be enabled for the dashboard's domain.
 
-## Historical Data
+## Architecture
 
-The original project was developed as a COVID-19 monitoring application. The accompanying web page presents the historical COVID-19 statistics for India, as the original data source is no longer maintained as a live COVID-19 tracker.
+```text
+                    Worldometer
+                         │
+                         ▼
+                  Python Scraper
+                         │
+                         ▼
+                      Flask
+                         │
+                    REST API
+                         │
+                         ▼
+               HTML / CSS / JavaScript
+                         │
+                         ▼
+                Interactive Dashboard
+```
 
-## License
+## Future Improvements
 
-This project is intended as a personal learning and portfolio project.
+Potential future improvements include:
+
+* Historical COVID-19 trend charts
+* Sortable statistics table
+* Additional Worldometer statistics
+* Country comparison
+* Automatic background monitoring
+* Notifications when new data is detected
+* Improved caching to reduce requests to the data source
+* Deployment with a production WSGI server
+
+## Background
+
+This project originally began as a simple Python COVID-19 notifier that retrieved country statistics and displayed desktop notifications.
+
+It was later expanded into an interactive web application to demonstrate:
+
+* Web scraping
+* REST API development
+* Flask backend development
+* Frontend/backend integration
+* JavaScript-based dynamic UI updates
+* Browser notifications
+* Full-stack project deployment
+
+## Author
+
+**Shiv Modi**
+
+GitHub: https://github.com/shivmodi21
