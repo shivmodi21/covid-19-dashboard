@@ -1,4 +1,5 @@
 Flask
-Flask-Cors
-pandas
+flask-cors
 requests
+beautifulsoup4
+gunicorn

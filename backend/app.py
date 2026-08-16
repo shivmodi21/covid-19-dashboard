@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 from scraper import (
@@ -7,22 +7,20 @@ from scraper import (
     get_global_data
 )
 
-
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="../frontend"
+)
 
 CORS(app)
 
 
-# =================================
-# Home
-# =================================
-
 @app.route("/")
 def home():
-
-    return jsonify({
-        "message": "COVID-19 Dashboard API is running"
-    })
+    return send_from_directory(
+        app.static_folder,
+        "index.html"
+    )
 
 
 # =================================
@@ -129,9 +127,4 @@ def country():
 # =================================
 
 if __name__ == "__main__":
-
-    app.run(
-        debug=True,
-        host="127.0.0.1",
-        port=5000
-    )
+    app.run(debug=True)
